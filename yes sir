@@ -1,0 +1,759 @@
+local player = game.Players.LocalPlayer
+
+if player:IsInGroup( 9497392 ) then
+game.StarterGui:SetCore(
+    "SendNotification",
+    {
+	Title = "ZOLO’S GUI",
+	Text = "i will continue to update this gui.", 
+}
+)
+local L_1_ = "t"
+local L_2_ = game.Players.LocalPlayer:GetMouse()
+L_2_.KeyDown:Connect(
+    function(L_22_arg0)
+	if L_22_arg0 == L_1_ then
+		if DaHoodSettings.SilentAim == true then
+			DaHoodSettings.SilentAim = false
+		else
+			DaHoodSettings.SilentAim = true
+		end
+	end
+end
+)
+game:GetService("RunService").RenderStepped:Connect(
+    function()
+	for L_23_forvar0, L_24_forvar1 in pairs(game.CoreGui:GetChildren()) do
+		if L_24_forvar1.Name == "PostmansAutoRob" then
+			L_24_forvar1:Destroy()
+		end
+	end
+	for L_25_forvar0, L_26_forvar1 in pairs(game.CoreGui:GetChildren()) do
+		if L_26_forvar1.Name == "WarningGUI" then
+			L_26_forvar1:Destroy()
+		end
+	end
+end
+)
+game.StarterGui:SetCore(
+    "SendNotification",
+    {
+	Title = "zolos gui",
+}
+)
+local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local L_4_ = L_3_.CreateLib("zolos ugi", "DarkTheme")
+local L_5_ = L_4_:NewTab(" Z lock")
+local L_6_ = L_5_:NewSection("my cam lock works for all da hood games")
+L_6_:NewButton(
+    "Aimlock",
+    "Beam niggas down",
+    function()
+	getgenv().AimPart = "HumanoidRootPart"
+	getgenv().AimlockKey = "q"
+	getgenv().AimRadius = 30
+	getgenv().ThirdPerson = true
+	getgenv().FirstPerson = true
+	getgenv().TeamCheck = false
+	getgenv().PredictMovement = true
+	getgenv().PredictionVelocity = 9
+	local L_27_, L_28_, L_29_, L_30_ =
+            game:GetService "Players",
+            game:GetService "UserInputService",
+            game:GetService "RunService",
+            game:GetService "StarterGui"
+	local L_31_, L_32_, L_33_, L_34_, L_35_, L_36_, L_37_ =
+            L_27_.LocalPlayer,
+            L_27_.LocalPlayer:GetMouse(),
+            workspace.CurrentCamera,
+            CFrame.new,
+            Ray.new,
+            Vector3.new,
+            Vector2.new
+	local L_38_, L_39_, L_40_ = true, false, false
+	local L_41_
+	getgenv().CiazwareUniversalAimbotLoaded = true
+	getgenv().WorldToViewportPoint = function(L_42_arg0)
+		return L_33_:WorldToViewportPoint(L_42_arg0)
+	end
+	getgenv().WorldToScreenPoint = function(L_43_arg0)
+		return L_33_.WorldToScreenPoint(L_33_, L_43_arg0)
+	end
+	getgenv().GetObscuringObjects = function(L_44_arg0)
+		if L_44_arg0 and L_44_arg0:FindFirstChild(getgenv().AimPart) and L_31_ and L_31_.Character:FindFirstChild("Head") then
+			local L_45_ = workspace:FindPartOnRay(L_35_(L_44_arg0[getgenv().AimPart].Position, L_31_.Character.Head.Position))
+			if L_45_ then
+				return L_45_:IsDescendantOf(L_44_arg0)
+			end
+		end
+	end
+	getgenv().GetNearestTarget = function()
+		local L_46_ = {}
+		local L_47_ = {}
+		local L_48_ = {}
+		for L_50_forvar0, L_51_forvar1 in pairs(L_27_:GetPlayers()) do
+			if L_51_forvar1 ~= L_31_ then
+				table.insert(L_46_, L_51_forvar1)
+			end
+		end
+		for L_52_forvar0, L_53_forvar1 in pairs(L_46_) do
+			if L_53_forvar1.Character ~= nil then
+				local L_54_ = L_53_forvar1.Character:FindFirstChild("Head")
+				if getgenv().TeamCheck == true and L_53_forvar1.Team ~= L_31_.Team then
+					local L_55_ =
+                            (L_53_forvar1.Character:FindFirstChild("Head").Position - game.Workspace.CurrentCamera.CFrame.p).magnitude
+					local L_56_ =
+                            Ray.new(
+                            game.Workspace.CurrentCamera.CFrame.p,
+                            (L_32_.Hit.p - game.Workspace.CurrentCamera.CFrame.p).unit * L_55_
+                        )
+					local L_57_, L_58_ = game.Workspace:FindPartOnRay(L_56_, game.Workspace)
+					local L_59_ = math.floor((L_58_ - L_54_.Position).magnitude)
+					L_47_[L_53_forvar1.Name .. L_52_forvar0] = {}
+					L_47_[L_53_forvar1.Name .. L_52_forvar0].dist = L_55_
+					L_47_[L_53_forvar1.Name .. L_52_forvar0].plr = L_53_forvar1
+					L_47_[L_53_forvar1.Name .. L_52_forvar0].diff = L_59_
+					table.insert(L_48_, L_59_)
+				elseif getgenv().TeamCheck == false and L_53_forvar1.Team == L_31_.Team then
+					local L_60_ =
+                            (L_53_forvar1.Character:FindFirstChild("Head").Position - game.Workspace.CurrentCamera.CFrame.p).magnitude
+					local L_61_ =
+                            Ray.new(
+                            game.Workspace.CurrentCamera.CFrame.p,
+                            (L_32_.Hit.p - game.Workspace.CurrentCamera.CFrame.p).unit * L_60_
+                        )
+					local L_62_, L_63_ = game.Workspace:FindPartOnRay(L_61_, game.Workspace)
+					local L_64_ = math.floor((L_63_ - L_54_.Position).magnitude)
+					L_47_[L_53_forvar1.Name .. L_52_forvar0] = {}
+					L_47_[L_53_forvar1.Name .. L_52_forvar0].dist = L_60_
+					L_47_[L_53_forvar1.Name .. L_52_forvar0].plr = L_53_forvar1
+					L_47_[L_53_forvar1.Name .. L_52_forvar0].diff = L_64_
+					table.insert(L_48_, L_64_)
+				end
+			end
+		end
+		if unpack(L_48_) == nil then
+			return nil
+		end
+		local L_49_ = math.floor(math.min(unpack(L_48_)))
+		if L_49_ > getgenv().AimRadius then
+			return nil
+		end
+		for L_65_forvar0, L_66_forvar1 in pairs(L_47_) do
+			if L_66_forvar1.diff == L_49_ then
+				return L_66_forvar1.plr
+			end
+		end
+		return nil
+	end
+	L_32_.KeyDown:Connect(
+            function(L_67_arg0)
+		if L_67_arg0 == AimlockKey and L_41_ == nil then
+			pcall(
+                        function()
+				if L_39_ ~= true then
+					L_39_ = true
+				end
+				local L_68_
+				L_68_ = GetNearestTarget()
+				if L_68_ ~= nil then
+					L_41_ = L_68_
+				end
+			end
+                    )
+		elseif L_67_arg0 == AimlockKey and L_41_ ~= nil then
+			if L_41_ ~= nil then
+				L_41_ = nil
+			end
+			if L_39_ ~= false then
+				L_39_ = false
+			end
+		end
+	end
+        )
+	L_29_.RenderStepped:Connect(
+            function()
+		if getgenv().ThirdPerson == true and getgenv().FirstPerson == true then
+			if
+                        (L_33_.Focus.p - L_33_.CoordinateFrame.p).Magnitude > 1 or
+                            (L_33_.Focus.p - L_33_.CoordinateFrame.p).Magnitude <= 1
+                     then
+				L_40_ = true
+			else
+				L_40_ = false
+			end
+		elseif getgenv().ThirdPerson == true and getgenv().FirstPerson == false then
+			if (L_33_.Focus.p - L_33_.CoordinateFrame.p).Magnitude > 1 then
+				L_40_ = true
+			else
+				L_40_ = false
+			end
+		elseif getgenv().ThirdPerson == false and getgenv().FirstPerson == true then
+			if (L_33_.Focus.p - L_33_.CoordinateFrame.p).Magnitude <= 1 then
+				L_40_ = true
+			else
+				L_40_ = false
+			end
+		end
+		if L_38_ == true and L_39_ == true then
+			if L_41_ and L_41_.Character and L_41_.Character:FindFirstChild(getgenv().AimPart) then
+				if getgenv().FirstPerson == true then
+					if L_40_ == true then
+						if getgenv().PredictMovement == true then
+							L_33_.CFrame =
+                                        L_34_(
+                                        L_33_.CFrame.p,
+                                        L_41_.Character[getgenv().AimPart].Position +
+                                            L_41_.Character[getgenv().AimPart].Velocity / PredictionVelocity
+                                    )
+						elseif getgenv().PredictMovement == false then
+							L_33_.CFrame = L_34_(L_33_.CFrame.p, L_41_.Character[getgenv().AimPart].Position)
+						end
+					end
+				elseif getgenv().ThirdPerson == true then
+					if L_40_ == true then
+						if getgenv().PredictMovement == true then
+							L_33_.CFrame =
+                                        L_34_(
+                                        L_33_.CFrame.p,
+                                        L_41_.Character[getgenv().AimPart].Position +
+                                            L_41_.Character[getgenv().AimPart].Velocity / PredictionVelocity
+                                    )
+						elseif getgenv().PredictMovement == false then
+							L_33_.CFrame = L_34_(L_33_.CFrame.p, L_41_.Character[getgenv().AimPart].Position)
+						end
+					end
+				end
+			end
+		end
+	end
+        )
+end
+)
+L_6_:NewTextBox(
+    "Aimlock Prediction",
+    "Customize your aimlock prediction",
+    function(L_70_arg0)
+	PredictionVelocity = L_70_arg0
+end
+)
+local L_6_ = L_5_:NewSection("locks for all da hood games")
+L_6_:NewButton(
+    "streamable for all games",
+    "made by me >:(",
+    function()
+loadstring(game:HttpGet("https://pastebin.com/raw/kQs8jvQp", true))()
+end
+)
+L_6_:NewButton(
+    "nyula ui",
+    "made bt nyula",
+    function()
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/nyulachan/nyula/main/nyuladhm"))()
+end
+)
+L_6_:NewButton(
+    "beamed ware",
+    "OP",
+    function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RYZZCHIPSX/ryzzchips/main/beamed%20ware%20script"))();
+end
+)
+local L_7_ = L_4_:NewTab("Tools")
+local L_8_ = L_7_:NewSection("zolos tools")
+L_8_:NewButton(
+    "Q tools",
+    "for aimlock",
+function()
+	loadstring(game:HttpGet("https://pastebin.com/raw/ZB2KdU1R", true))()
+end
+)
+L_8_:NewButton(
+    "speed tools",
+    "fake macro",
+function()
+loadstring(game:HttpGetAsync("https://pastebin.com/raw/3GVkrpWU", true))()
+end
+)
+L_8_:NewButton(
+    "T tools",
+    "for aim viewer",
+function()
+loadstring(game:HttpGetAsync("https://pastebin.com/raw/EnM6UkTP",  true))()
+end
+)
+L_8_:NewButton(
+    "shift lock for mobile",
+    "shift lock lol",
+function()
+loadstring(game:HttpGet("https://pastebin.com/raw/Kvj7LB8N",true))();
+end
+)
+L_8_:NewButton(
+    "keybored for mobile",
+    "keybored",
+function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+end
+)
+local L_7_ = L_4_:NewTab("silent aim")
+local L_8_ = L_7_:NewSection("Z aim")
+L_8_:NewButton(
+    "blant silent",
+    "not responsible if you get banned",
+function()
+loadstring(game:HttpGetAsync ("https://pastebin.com/raw/4XmVVGQr", true))()
+end
+)
+L_8_:NewButton(
+    "best streamable",
+    "only works for da hood",
+function() 
+loadstring(game:HttpGetAsync ("https://pastebin.com/raw/ycgWFYaG", true))()
+end
+)
+local L_7_ = L_4_:NewTab("antis/resolvers")
+local L_8_ = L_7_:NewSection("Z anti")
+L_8_:NewButton(
+    "primes anti lock (key is prime)",
+    "best anti",
+function() 
+loadstring(game:HttpGetAsync ("https://pastebin.com/raw/yFFsmQfp", true))()
+end
+) 
+L_8_:NewButton(
+    "aim viewer",
+    "best aim viewer",
+function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/aniti-lock/main/antilock", true))()
+end
+)
+L_8_:NewButton(
+    "aim viewer (key is t and i)",
+    "works on all games",
+function()
+loadstring(game:HttpGet("https://pastebin.com/raw/kDvyaSqG", true))()
+end
+) 
+L_8_:NewButton(
+    "anti aim viewer",
+    "works on all games",
+function()
+loadstring(game:HttpGet("https://pastebin.com/raw/WEiW5vsF", true))()
+end
+)
+L_8_:NewButton(
+    "best anti fling",
+    "best anti",
+function()
+loadstring(game:HttpGetAsync ("https://pastebin.com/raw/VRfkVK5P", true))()
+end
+)
+local L_8_ = L_7_:NewSection("zolo’s resolvers")
+L_8_:NewButton(
+    "best resolver",
+    "best resolver",
+function() 
+loadstring(game:HttpGetAsync ("https://pastebin.com/raw/FWFCx2Xm", true))()
+end
+) 
+local L_7_ = L_4_:NewTab("ESP")
+local L_8_ = L_7_:NewSection("ezp")
+L_8_:NewButton(
+    "square esp",
+    "square esp",
+function() 
+loadstring(game:HttpGet("https://paste.gg/p/anonymous/7259b0557ebf44ccabf2f7b58dc79899/files/0475cb5d744642a2b572e3a8af205588/raw"))()
+end
+)
+L_8_:NewButton(
+    "name esp",
+    "ESP",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/Nj4dG8CZ"))()
+end
+) 
+L_8_:NewButton(
+    "tracer esp",
+    "ESP",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/c4FNAXCW"))()
+end
+)
+L_8_:NewButton(
+    "BEST ESP",
+    "ESP",
+
+function()
+    _G.FriendColor = Color3.fromRGB(0, 0, 255)
+_G.EnemyColor = Color3.fromRGB(255, 0, 0)
+_G.UseTeamColor = true
+
+local Holder = Instance.new("Folder", game.CoreGui)
+Holder.Name = "ESP"
+
+local Box = Instance.new("BoxHandleAdornment")
+Box.Name = "nilBox"
+Box.Size = Vector3.new(1, 2, 1)
+Box.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
+Box.Transparency = 0.7
+Box.ZIndex = 0
+Box.AlwaysOnTop = false
+Box.Visible = false
+
+local NameTag = Instance.new("BillboardGui")
+NameTag.Name = "nilNameTag"
+NameTag.Enabled = false
+NameTag.Size = UDim2.new(0, 200, 0, 50)
+NameTag.AlwaysOnTop = true
+NameTag.StudsOffset = Vector3.new(0, 1.8, 0)
+local Tag = Instance.new("TextLabel", NameTag)
+Tag.Name = "Tag"
+Tag.BackgroundTransparency = 1
+Tag.Position = UDim2.new(0, -50, 0, 0)
+Tag.Size = UDim2.new(0, 300, 0, 20)
+Tag.TextSize = 15
+Tag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
+Tag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
+Tag.TextStrokeTransparency = 0.4
+Tag.Text = "nil"
+Tag.Font = Enum.Font.SourceSansBold
+Tag.TextScaled = false
+
+local LoadCharacter = function(v)
+	repeat wait() until v.Character ~= nil
+	v.Character:WaitForChild("Humanoid")
+	local vHolder = Holder:FindFirstChild(v.Name)
+	vHolder:ClearAllChildren()
+	local b = Box:Clone()
+	b.Name = v.Name .. "Box"
+	b.Adornee = v.Character
+	b.Parent = vHolder
+	local t = NameTag:Clone()
+	t.Name = v.Name .. "NameTag"
+	t.Enabled = true
+	t.Parent = vHolder
+	t.Adornee = v.Character:WaitForChild("Head", 5)
+	if not t.Adornee then
+		return UnloadCharacter(v)
+	end
+	t.Tag.Text = v.Name
+	b.Color3 = Color3.new(v.TeamColor.r, v.TeamColor.g, v.TeamColor.b)
+	t.Tag.TextColor3 = Color3.new(v.TeamColor.r, v.TeamColor.g, v.TeamColor.b)
+	local Update
+	local UpdateNameTag = function()
+		if not pcall(function()
+			v.Character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+			local maxh = math.floor(v.Character.Humanoid.MaxHealth)
+			local h = math.floor(v.Character.Humanoid.Health)
+		end) then
+			Update:Disconnect()
+		end
+	end
+	UpdateNameTag()
+	Update = v.Character.Humanoid.Changed:Connect(UpdateNameTag)
+end
+
+local UnloadCharacter = function(v)
+	local vHolder = Holder:FindFirstChild(v.Name)
+	if vHolder and (vHolder:FindFirstChild(v.Name .. "Box") ~= nil or vHolder:FindFirstChild(v.Name .. "NameTag") ~= nil) then
+		vHolder:ClearAllChildren()
+	end
+end
+
+local LoadPlayer = function(v)
+	local vHolder = Instance.new("Folder", Holder)
+	vHolder.Name = v.Name
+	v.CharacterAdded:Connect(function()
+		pcall(LoadCharacter, v)
+	end)
+	v.CharacterRemoving:Connect(function()
+		pcall(UnloadCharacter, v)
+	end)
+	v.Changed:Connect(function(prop)
+		if prop == "TeamColor" then
+			UnloadCharacter(v)
+			wait()
+			LoadCharacter(v)
+		end
+	end)
+	LoadCharacter(v)
+end
+
+local UnloadPlayer = function(v)
+	UnloadCharacter(v)
+	local vHolder = Holder:FindFirstChild(v.Name)
+	if vHolder then
+		vHolder:Destroy()
+	end
+end
+
+for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+	spawn(function() pcall(LoadPlayer, v) end)
+end
+
+game:GetService("Players").PlayerAdded:Connect(function(v)
+	pcall(LoadPlayer, v)
+end)
+
+game:GetService("Players").PlayerRemoving:Connect(function(v)
+	pcall(UnloadPlayer, v)
+end)
+
+game:GetService("Players").LocalPlayer.NameDisplayDistance = 0
+
+if _G.Reantheajfdfjdgs then
+    return
+end
+
+_G.Reantheajfdfjdgs = ":suifayhgvsdghfsfkajewfrhk321rk213kjrgkhj432rj34f67df"
+
+local players = game:GetService("Players")
+local plr = players.LocalPlayer
+
+function esp(target, color)
+    if target.Character then
+        if not target.Character:FindFirstChild("GetReal") then
+            local highlight = Instance.new("Highlight")
+            highlight.RobloxLocked = true
+            highlight.Name = "GetReal"
+            highlight.Adornee = target.Character
+            highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.FillColor = color
+            highlight.Parent = target.Character
+        else
+            target.Character.GetReal.FillColor = color
+        end
+    end
+end
+
+while task.wait() do
+    for i, v in pairs(players:GetPlayers()) do
+        if v ~= plr then
+            esp(v, _G.UseTeamColor and v.TeamColor.Color or ((plr.TeamColor == v.TeamColor) and _G.FriendColor or _G.EnemyColor))
+        end
+    end
+end
+end)
+
+A4Section:NewButton("Tracers", "ButtonInfo", function()
+    local TargetPartName = "HumanoidRootPart"
+local GenericHumanoidTargetPartName = TargetPartName	
+local LineColor = Color3.new(255, 255, 255)
+local TeammateLineColor = Color3.new(0, 0.25, 1)
+local GenericHumanoidLineColor = Color3.new(1, 0, 0)
+local LineWidth = 2
+local DrawTeammates = true
+local FindHumanoids = true
+local GetLineOrigin = function(Camera)
+	return Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y*.9)
+end
+
+
+
+
+local Camera = workspace.CurrentCamera
+local LineOrigin = nil
+Camera:GetPropertyChangedSignal("ViewportSize"):Connect(function()
+	LineOrigin = GetLineOrigin(Camera)
+end)
+LineOrigin = GetLineOrigin(Camera)
+
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "SnaplineGui"
+Gui.Parent = game.Players.LocalPlayer.PlayerGui
+local Lines = {}
+
+
+function Setline(Line, Width, Color, Origin, Destination)
+	local Position = (Origin + Destination) / 2
+	Line.Position = UDim2.new(0, Position.X, 0, Position.Y)
+	local Length = (Origin - Destination).Magnitude
+	Line.BackgroundColor3 = Color
+	Line.BorderColor3 = Color
+	Line.Size = UDim2.new(0, Length, 0, Width)
+	Line.Rotation = math.deg(math.atan2(Destination.Y - Origin.Y, Destination.X - Origin.X))
+end
+
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	local Targets = {}
+	for i, Player in pairs(game.Players:GetPlayers()) do
+		if Player == game.Players.LocalPlayer then continue end
+		local IsTeammate = game.Players.LocalPlayer.Team ~= nil and Player.Team == game.Players.LocalPlayer.Team
+		if not DrawTeammates and IsTeammate then continue end
+		local Character = Player.Character
+		if not Character then continue end
+		local TargetPart = Character:FindFirstChild(TargetPartName)
+		if not TargetPart then continue end
+		local ScreenPoint, OnScreen = Camera:WorldToScreenPoint(TargetPart.Position)
+		if OnScreen then
+			table.insert(Targets, {Vector2.new(ScreenPoint.X, ScreenPoint.Y), IsTeammate and TeammateLineColor or LineColor})
+		end
+	end
+	if FindHumanoids then
+		for _, Obj in pairs(workspace:GetDescendants()) do
+			if Obj.ClassName ~= "Humanoid" then continue end
+			if game.Players:FindFirstChild(Obj.Parent.Name) then continue end
+			local TargetPart = Obj.Parent:FindFirstChild(TargetPartName)
+			if not TargetPart then continue end
+			local ScreenPoint, OnScreen = Camera:WorldToScreenPoint(TargetPart.Position)
+			if OnScreen then
+				table.insert(Targets, {Vector2.new(ScreenPoint.X, ScreenPoint.Y), GenericHumanoidLineColor})
+			end
+		end
+	end
+	if #Targets > #Lines then
+		local NewLine = Instance.new("Frame")
+		NewLine.Name = "Snapline"
+		NewLine.AnchorPoint = Vector2.new(.5, .5)
+		NewLine.Parent = Gui
+		table.insert(Lines, NewLine)
+	end
+	for i, Line in pairs(Lines) do
+		local TargetData = Targets[i]
+		if not TargetData then
+			Line:Destroy()
+			table.remove(Lines, i)
+			continue
+		end
+		Setline(Line, LineWidth, TargetData[2], LineOrigin, TargetData[1])
+	end
+end)
+end)
+local L_7_ = L_4_:NewTab("troll")
+local L_8_ = L_7_:NewSection("zolo the troll")
+L_8_:NewButton(
+    "fling all",
+    "FLING THESE SONS",
+function() 
+loadstring(game:HttpGet(('https://pastebin.com/raw/WgnaLV10'),true))()
+end
+)
+L_8_:NewButton(
+    "chat spammer",
+    "spam chat ez",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/T7qMxQua", true))()
+end
+)
+L_8_:NewButton(
+    "no clip",
+    "no clips",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/17Aht7iW"))()
+end
+)
+L_8_:NewButton(
+    "trash talk(key is Y)",
+    "for the tryhards",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/eqNVgrRQ"))()
+end
+)
+L_8_:NewButton(
+    "rainbow character",
+    "glitches when u die",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/nL62TqMk"))()
+end
+) 
+L_8_:NewButton(
+    "touch fling",
+    "yes",
+function() 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe./main/Fling%20GUI"))()
+end
+) 
+L_8_:NewButton(
+    "tp walk",
+    "yes",
+function() 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TherealXORA/Roblox-Scripts/main/TpwalkV2"))()
+end
+) 
+local L_7_ = L_4_:NewTab("extra")
+local L_8_ = L_7_:NewSection("extra scripts")
+L_8_:NewButton(
+    "fly gui",
+    "one of the only working fly gui for dh",
+function() 
+loadstring(game:HttpGetAsync ("https://pastebin.com/raw/xuP0qtfp", true))()
+end
+)
+L_8_:NewButton(
+    "shaders",
+   "pretty",
+function() 
+loadstring(game:HttpGet(('https://pastefy.app/xXkUxA0P/raw'),true))()
+end
+)
+L_8_:NewButton(
+    "fps booster",
+   "for tryhards",
+function() 
+loadstring(game:HttpGet(('https://pastebin.com/raw/zCe01Nm5'),true))()
+end
+) 
+L_8_:NewButton(
+    "auto clicker for macro",
+   "incase speed tool dont work",
+function() 
+getgenv().key = "Hostile"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/The-telligence/main/MC%20KSystem%202"))()
+end
+) 
+L_8_:NewButton(
+    "server hop",
+   "yup",
+function() 
+local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
+
+module:Teleport(game.PlaceId)
+end
+)
+L_8_:NewButton(
+    "free emotes",
+   "yup",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/eCpipCTH"))()
+end
+) 
+L_8_:NewButton(
+    "fake tryhard animation",
+   "for alts",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/WcaM9FBf"))()
+end
+) 
+L_8_:NewButton(
+    "mobile res",
+   "for alts",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/uBR15XEm"))()
+end
+) 
+L_8_:NewButton(
+    "no delay",
+   "for alts",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/ki1Fj4U8"))()
+end
+)
+L_8_:NewButton(
+    "rainbow chat",
+    "fr",
+function() 
+loadstring(game:HttpGet("https://pastebin.com/raw/D7SQaEbS"))()
+end
+)
+
+
+
+else
+setclipboard("https://www.roblox.com/groups/9497391/16koz#!/about")
+wait(1)
+game.Players.LocalPlayer:Kick("Join the group to use the script, the link was copied to your clipboard!")
+end
+
